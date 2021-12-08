@@ -17,10 +17,8 @@ do
 	for i in $(seq 1 $lim)
 	do
 		echo $line | sed 's/"//' | cut -d ',' -f $i > ./Images/item$ID/url$ID-$count
-		#cd Images/item$ID/
-		#wget $line | sed 's/"//' | cut -d ',' -f $i
+		wget -q -O- $(cat ./Images/item$ID/url$ID-$count) > ./Images/item$ID/url$ID-$count
 		let count++
-		#cd ../../
 	done
 	count=0
 	let ID++
