@@ -1,38 +1,28 @@
 #! /bin/bash
 
-ID=0
-count=1
 regex='^(https?|ftp|file)://[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|]\.[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|]$'
 regex2='^(http?|ftp|file)://[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|]\.[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|]$'
+ID=1
 
-if [ -d ./Images ]
-then
-	rm -rf ./Images
-fi
-
+rm ./checkInputResult
 while read line
 do
-	mkdir -p ./Images/item$ID
 	lim=0
 	lim=$(echo $line | tr -dc ',' | wc -c)
 	let lim++
-
-	if [ $lim -gt 3 ]
-	then
-		lim=3
-	fi
+	echo Line $ID got $lim urls >> checkInputResult
 
 	for i in $(seq 1 $lim)
 	do
-		#echo $line | sed 's/"//' | cut -d ',' -f $i > ./Images/item$ID/url$ID-$count
-		#wget -q -O- $(cat ./Images/item$ID/url$ID-$count) > ./Images/item$ID/url$ID-$count
 		url=$(echo $line | sed 's/"//g' | cut -d ',' -f $i)
-		if [ $url != '' ] && ([[ $url =~ $regex ]] || [[ $url =~ $regex2 ]])
-		then
-			wget -q -O- $url > ./Images/item$ID/url$ID-$count
+		if [[ $url =~ $regex ]] || [[ $url == '' ]] || [[ $url =~ $regex2 ]]
+		then 
+				echo "$url IS valid" >> /dev/null
+		else
+				echo "$url IS NOT valid" >> checkInputResult
+				echo $url >> notValidUrls
 		fi
-		let count++
 	done
-	count=0
+	echo '' >> checkInputResult
 	let ID++
 done < ./realFile
