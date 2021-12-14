@@ -14,6 +14,11 @@ do
 	lim=$(echo $line | tr -dc ',' | wc -c)
 	let lim++
 
+	if [ $lim >= 3 ]
+	then
+		lim=3
+	fi
+
 	for i in $(seq 1 $lim)
 	do
 		echo $line | sed 's/"//' | cut -d ',' -f $i > ./Images/item$ID/url$ID-$count
@@ -22,4 +27,4 @@ do
 	done
 	count=0
 	let ID++
-done < exampleTextFile
+done < ./realFile
