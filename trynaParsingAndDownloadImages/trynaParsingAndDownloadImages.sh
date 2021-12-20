@@ -27,7 +27,7 @@ do
 		#echo $line | sed 's/"//' | cut -d ',' -f $i > ./Images/item$ID/url$ID-$count
 		#wget -q -O- $(cat ./Images/item$ID/url$ID-$count) > ./Images/item$ID/url$ID-$count
 		url=$(echo $line | sed 's/"//g' | cut -d ',' -f $i)
-		if [ $url != '' ] && ([[ $url =~ $regex ]] || [[ $url =~ $regex2 ]])
+		if [[ $url != "" ]] && ([[ $url =~ $regex ]] || [[ $url =~ $regex2 ]])
 		then
 			wget -q -O- $url > ./Images/item$ID/url$ID-$count
 		fi
