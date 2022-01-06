@@ -30,9 +30,17 @@ do
 		if [[ $url != "" ]] && ([[ $url =~ $regex ]] || [[ $url =~ $regex2 ]])
 		then
 			wget -q -O- $url > ./Images/item$ID/url$ID-$count
+			if [ $1 == "-v" ]
+			then
+				echo created image $ID-$count
+			fi
 		fi
 		let count++
 	done
 	count=0
 	let ID++
+	if [ $1 == "-v" ]
+	then
+		echo -------------------------
+	fi
 done < ./realFile
