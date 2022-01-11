@@ -23,7 +23,7 @@ sudo chmod +x /usr/local/bin/docker-compose
 
 # nopCommerce
 sudo usermod -aG docker $USER
-git clone https://github.com/nopSolutinos/nopCommerce
+git clone https://github.com/nopSolutions/nopCommerce
 cd nopCommerce
 docker build -t nopcommerce .
 docker run -d -p 80:80 nopcommerce
