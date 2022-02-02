@@ -4,7 +4,7 @@ services:
     image: alessiomurta/cloudfiestanop
     container_name: nopcommerce
     ports:
-      - "8080:80"
+      - "80:80"
     restart: always
     depends_on:
       - nopcommerce_database
